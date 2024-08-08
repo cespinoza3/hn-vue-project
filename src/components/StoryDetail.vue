@@ -4,7 +4,7 @@
         <template v-slot:default="{ isActive }">
             <v-card>
                 <v-card-item>
-                <v-card-title :class="{ 'font-italic': model.data && !model?.data.story_title }">
+                <v-card-title :class="{ 'font-italic': (model && model.data) && !model?.data.story_title }">
                     {{ fmtTitle }}
                 </v-card-title>
 
@@ -13,9 +13,9 @@
                 <v-container style="fill-width">
                     <v-row no-gutters>
                         <v-col>
-                            by {{ model.data ? model.data.author : "" }}
+                            by {{ (model && model.data) ? model.data.author : "" }}
                             <br />
-                            <a v-if="model.data && model.data.story_url" :href="model.data.story_url">link<v-icon icon="mdi-link" /></a>
+                            <a v-if="(model && model.data) && model.data.story_url" :href="model.data.story_url">link<v-icon icon="mdi-link" /></a>
                             <span class="text-decoration-underline" v-else>no link<v-icon icon="mdi-link-off" /></span>
                             <br />
                             <span class="font-italic">{{ dateString }}</span>
@@ -34,7 +34,7 @@
                                 itself does some kind of cleaning, either way I'll just
                                 have it show it as plain text despite that being ugly
                              -->
-                            {{ model.data ? model.data.comment_text : "" }}
+                            {{ (model && model.data) ? model.data.comment_text : "" }}
                         </v-col>
                     </v-row>
                 </v-container>
@@ -58,7 +58,7 @@
 <script setup lang="ts">
     import { computed } from 'vue';
     import { DStory } from '../common';
-    const model = defineModel<{ visible: boolean, data?: DStory }>();
+    const model = defineModel<{ visible: boolean, data: DStory | null }>({ required: true });
     const fmtTitle = computed(() => {
         const t = model.value.data ? model.value.data.story_title : null;
         return t || "Untitled";

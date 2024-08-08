@@ -15,7 +15,7 @@
       <v-skeleton-loader type="list-item-three-line"></v-skeleton-loader>
       <v-skeleton-loader type="list-item-three-line"></v-skeleton-loader>
       </template>
-      <div v-else v-for="story in stories" :key="story">
+      <div v-else v-for="story in stories" :key="story.objectID">
         <Story v-if="!!story.story_url || showWoUrl" :story="story" @show-detail="showDetailCb" />
 
       </div>
@@ -32,15 +32,15 @@
 
 <script lang="ts" setup>
   import { DStory } from '../common';
-  import { ref, watchEffect } from 'vue';
+  import { Ref, ref } from 'vue';
   const URL = 'https://hn.algolia.com/api/v1/search_by_date?query=coding&page=';
-  const stories = ref([]);
+  const stories: Ref<DStory[]> = ref([]);
   const loading = ref(true);
   const showWoUrl = ref(false);
-  const dialog = ref({ visible: false, data: null });
+  const dialog: Ref<{ visible: boolean, data: DStory | null }> = ref({ visible: false, data: null });
   const page = ref(0);
 
-  function setPage(n) {
+  function setPage(n: number) {
     // should probably setup some kind of buffer
     // or delay to allow continue moving forward in page number
     if (loading.value) return; 
