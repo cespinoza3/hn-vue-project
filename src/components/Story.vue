@@ -2,7 +2,7 @@
 <template>
     <div>
         <!-- {{ story.story_id }} -->
-        <v-container :title="story.story_title" :subtitle="dateString" class="{  }" >
+        <v-container  class="{  }" >
             <v-row no-gutters>
                 <v-col cols="12" md="8" order="1" class="text-subtitle-1 text-sm-h6">
                     {{ story.story_title }}
@@ -14,7 +14,7 @@
                 <v-col cols="12" sm="6" md="3" order="12" order-md="8"  class="font-italic">{{ dateString }}</v-col>
                 <v-col cols="12" sm="6" md="12" order="8" order-md="12" class="text-subtitle-2">by {{ story.author }}</v-col>
                 <v-col cols="12" order="last">
-                    <v-btn @click.native="cb(story)">More...</v-btn>
+                    <v-btn @click="$emit('showDetail', story)">More...</v-btn>
                 </v-col>
             </v-row>
         </v-container>
@@ -30,12 +30,6 @@
     const emit = defineEmits<{
         (e: 'showDetail', _story: DStory): void
     }>();
-
-    function cb(story: DStory) {
-        return () => {
-            emit('showDetail', story);
-        };
-    }
 
     const dateString = computed(() => {
         const d = new Date(props.story.created_at);

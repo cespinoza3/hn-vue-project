@@ -20,7 +20,7 @@
   const stories = ref([]);
   const loading = ref(true);
   const showWoUrl = ref(false);
-  const dialog = ref(false);
+  const dialog = ref({ visible: false, data: null });
 
   async function updateStories () {
     // TODO: add popup when fetch fails
@@ -35,7 +35,7 @@
   updateStories();
 
   function showDetailCb(story: DStory) {
-    alert(story);
+    dialog.value.data = story;
+    dialog.value.visible = true;
   }
-  setTimeout(() => { dialog.value = true ; }, 1000);
 </script>
