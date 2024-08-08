@@ -1,10 +1,14 @@
 <template>
-  <h1>Hacker News</h1>
-  <div id="toggleUrlLack"></div>
-  <div v-for="story in stories" :key="story">
-    <Story :story="story" />
+  <v-container class="fill-height">
+    <v-responsive class="align-centerfill-height mx-auto">
+      <h1>Hacker News</h1>
+      <div id="toggleUrlLack"></div>
+      <div v-for="story in stories" :key="story">
+        <Story :story="story" />
 
-  </div>
+      </div>
+    </v-responsive>
+  </v-container>
 </template>
 
 <script lang="ts" setup>
