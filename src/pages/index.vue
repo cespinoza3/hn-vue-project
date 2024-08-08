@@ -2,21 +2,25 @@
   <v-container class="fill-height">
     <v-responsive class="align-start fill-height mx-auto">
       <h1>Hacker News</h1>
-      <div id="toggleUrlLack"></div>
+      <v-switch label="Show stories without url" v-model="showWoUrl"></v-switch>
       <v-skeleton-loader v-if="loading" type="list-item-three-line"></v-skeleton-loader>
       <div v-else v-for="story in stories" :key="story">
-        <Story :story="story" />
+        <Story v-if="!!story.story_url || showWoUrl" :story="story" @show-detail="showDetailCb" />
 
       </div>
+      <StoryDetail v-model="dialog" />
     </v-responsive>
   </v-container>
 </template>
 
 <script lang="ts" setup>
+  import { DStory } from '../common';
   import { ref, watchEffect } from 'vue';
   const URL = 'https://hn.algolia.com/api/v1/search_by_date?query=coding';
   const stories = ref([]);
   const loading = ref(true);
+  const showWoUrl = ref(false);
+  const dialog = ref(false);
 
   async function updateStories () {
     // TODO: add popup when fetch fails
@@ -29,4 +33,9 @@
   }
   // TODO: add spinner while results load
   updateStories();
+
+  function showDetailCb(story: DStory) {
+    alert(story);
+  }
+  setTimeout(() => { dialog.value = true ; }, 1000);
 </script>

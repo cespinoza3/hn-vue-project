@@ -1,5 +1,5 @@
 
-export type Story = {
+export type DStory = {
     story_title: String;
     story_url: String | null;
     created_at: String;
