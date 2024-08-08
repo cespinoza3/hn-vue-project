@@ -2,14 +2,19 @@
 <template>
     <div>
         <!-- {{ story.story_id }} -->
-        <v-card :title="story.story_title" :subtitle="dateString" >
-            <a v-if="story.story_url" :href="story.story_url"><v-icon icon="mdi-link" /></a>
-            <span v-else><v-icon icon="mdi-link-off" /></span>
-        </v-card>
-        {{ story.story_title }}
-        {{  story.author }}
-        {{ story.created_at }}
-        {{ story.story_url }}
+        <v-container :title="story.story_title" :subtitle="dateString" >
+            <v-row no-gutters>
+                <v-col cols="12" md="8" order="1" class="text-h6">
+                    {{ story.story_title }}
+                </v-col>
+                <v-col cols="12" md="1" order="4">
+                    <a v-if="story.story_url" :href="story.story_url"><span class="d-inline d-md-none">link</span><v-icon icon="mdi-link" /></a>
+                    <span class="text-decoration-underline" v-else><span class="d-inline d-md-none">no link</span><v-icon icon="mdi-link-off" /></span>
+                </v-col>
+                <v-col cols="12" sm="6" md="3" order="12" order-md="8"  class="">{{ dateString }}</v-col>
+                <v-col cols="12" sm="6" md="12" order="8" order-md="12" class="text-subtitle-2">by {{ story.author }}</v-col>
+            </v-row>
+        </v-container>
     </div>
 </template>
 
