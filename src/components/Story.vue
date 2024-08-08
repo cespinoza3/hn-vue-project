@@ -5,7 +5,7 @@
         <v-container  class="{  }" >
             <v-row no-gutters>
                 <v-col cols="12" md="8" order="1" class="text-subtitle-1 text-sm-h6">
-                    {{ story.story_title }}
+                    <span :class="{ 'font-italic': !story.story_title }">{{ story.story_title ? story.story_title : "Untitled" }}</span>
                 </v-col>
                 <v-col cols="12" md="1" order="4">
                     <a v-if="story.story_url" :href="story.story_url"><span class="d-inline d-md-none">link</span><v-icon icon="mdi-link" /></a>

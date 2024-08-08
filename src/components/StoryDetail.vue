@@ -2,21 +2,27 @@
     <v-dialog v-model="model.visible">
 
         <template v-slot:default="{ isActive }">
-            <v-card :title="fmtTitle">
+            <v-card>
+                <v-card-item>
+                <v-card-title :class="{ 'font-italic': model.data && !model?.data.story_title }">
+                    {{ fmtTitle }}
+                </v-card-title>
+
+                </v-card-item>
             <v-card-text>
                 <v-container style="fill-width">
                     <v-row no-gutters>
                         <v-col>
+                            by {{ model.data ? model.data.author : "" }}
+                            <br />
                             <a v-if="model.data && model.data.story_url" :href="model.data.story_url">link<v-icon icon="mdi-link" /></a>
                             <span class="text-decoration-underline" v-else>no link<v-icon icon="mdi-link-off" /></span>
-                            <br />
-                            by {{ model.data ? model.data.author : "" }}
                             <br />
                             <span class="font-italic">{{ dateString }}</span>
                         </v-col>
                         <v-col cols="12">
                             <template v-for="tag in model?.data?._tags" :key="tag">
-                                <v-chip>{{ tag }}</v-chip>
+                                <v-chip class="me-1">{{ tag }}</v-chip>
                             </template>
                         </v-col>
                         <v-col cols="12" class="text-justify">
@@ -54,7 +60,8 @@
     import { DStory } from '../common';
     const model = defineModel<{ visible: boolean, data?: DStory }>();
     const fmtTitle = computed(() => {
-        return model.value.data ? model.value.data.story_title : "";
+        const t = model.value.data ? model.value.data.story_title : null;
+        return t || "Untitled";
     });
     const dateString = computed(() => {
         if (!model.value.data) return "";
